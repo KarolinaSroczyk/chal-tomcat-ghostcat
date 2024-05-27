@@ -1,0 +1,16 @@
+apiVersion: kctf.dev/v1
+kind: Challenge
+metadata:
+  name: chal-tomcat
+spec:
+  deployed: true
+  powDifficultySeconds: 0
+  network:
+    public: false
+    ports:
+      - protocol: "TCP"
+        targetPort: 8080
+  healthcheck:
+    # TIP: disable the healthcheck during development
+    enabled: false
+  image: europe-west4-docker.pkg.dev/internet-ctf/challenges/challenge:313daf8f0079e6899971da0cff59fa9f468e00c01aa50ea220483d9c8410a9f2
