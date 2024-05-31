@@ -10,7 +10,24 @@ spec:
     ports:
       - protocol: "TCP"
         targetPort: 8080
+  podTemplate:
+    template:
+      spec:
+        containers:
+          - name: challenge
+            volumeMounts:
+              - name: flag-volume
+                mountPath: "/chroot/flag"
+        serviceAccountName: secret-readonly-sa
+        volumes:
+          - name: flag-volume
+            csi:
+              driver: secrets-store-gke.csi.k8s.io
+              readOnly: true
+              volumeAttributes:
+                secretProviderClass: tomcat-ghostcat-provider
   healthcheck:
     # TIP: disable the healthcheck during development
-    enabled: false
-  image: europe-west4-docker.pkg.dev/internet-ctf/challenges/challenge:313daf8f0079e6899971da0cff59fa9f468e00c01aa50ea220483d9c8410a9f2
+    enabled: true
+    image: europe-west4-docker.pkg.dev/internet-ctf/challenges/healthcheck:104fb00179d33bfe818eaff5a9ec5d7bae43ae8aa0899cf216084f70da544389
+  image: europe-west4-docker.pkg.dev/internet-ctf/challenges/challenge:40d8d96d624808a656873027517478da9a5977d1012bc86e5228151ca06afeab
